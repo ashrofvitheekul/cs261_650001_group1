@@ -1,4 +1,5 @@
 # cs261_650001_group1
+https://trello.com/w/group6_section650001
 1. ฐานข้อมูล (1 คน)
  ER diagram · test spec ส่วน DAO
    งาน: T06 (ER), T09 (SQL), T12
