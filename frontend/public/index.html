@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TU Smart Parking</title>
+</head>
+<body>
+  <h1>TU Smart Parking</h1>
+  <p id="status">กำลังเช็กระบบ...</p>
+
+  <script>
+    fetch('http://localhost:8081/api/health')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('status').textContent =
+          'API: ' + data.api + ' · Database: ' + data.database;
+      })
+      .catch(() => {
+        document.getElementById('status').textContent = 'ติดต่อ API ไม่ได้';
+      });
+  </script>
+</body>
+</html>

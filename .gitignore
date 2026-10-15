@@ -1,0 +1,11 @@
+# Node
+node_modules/
+
+# Maven
+target/
+
+# Secrets
+.env
+
+# Logs
+*.log
