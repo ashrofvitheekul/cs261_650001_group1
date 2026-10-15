@@ -1,0 +1,18 @@
+@startuml
+actor USER as U
+participant "WebPage\n(map.js)" as UI
+participant ParkingLotController as C
+participant ParkingLotService as S
+participant ParkingLotRepository as R
+database "MS SQL\nparking_lot" as DB
+U -> UI : Open http://localhost:3000
+UI -> C : GET /api/parking-lots
+C -> S : findAll(null)
+S -> R : findAllByOrderByCodeAsc()
+R -> DB : SELECT ... ORDER BY code
+DB --> R : 8 Rows
+R --> S : List<ParkingLot>
+S --> C : List<ParkingLotResponse>
+C --> UI : 200 JSON
+UI --> U : Map pins + Car parking (Password · Name · building · navigation)
+@enduml

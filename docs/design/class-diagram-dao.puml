@@ -1,0 +1,25 @@
+@startuml
+interface "JpaRepository<ParkingLot, Long>" as JPA
+
+interface ParkingLotRepository {
+  +findAllByOrderByCodeAsc() : List<ParkingLot>
+  +search(keyword : String) : List<ParkingLot>
+  +findByVehicleTypeAndAvailableSpotsGreaterThan(type : String, n : int) : List<ParkingLot>
+}
+
+class ParkingLot <<Entity>> {
+  -id : Long
+  -code : String
+  -nameTh : String
+  -building : String
+  -vehicleType : String
+  -latitude : BigDecimal
+  -longitude : BigDecimal
+  -totalSpots : int
+  -availableSpots : int
+  -updatedAt : LocalDateTime
+}
+
+JPA <|-- ParkingLotRepository
+ParkingLotRepository ..> ParkingLot
+@enduml

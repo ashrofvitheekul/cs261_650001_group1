@@ -1,0 +1,23 @@
+@startuml
+actor USER as U
+participant "WebPage\n(search.js)" as UI
+participant ParkingLotController as C
+participant ParkingLotService as S
+participant ParkingLotRepository as R
+database "MS SQL" as DB
+U -> UI : type "library"
+UI -> UI : wait 300 ms after stop type
+UI -> C : GET /api/parking-lots?q=library
+C -> S : findAll("library")
+S -> R : search("library")
+R -> DB : WHERE code / name_th / building LIKE '%library%'
+DB --> R : P3
+R --> S : [P3]
+S --> C : [P3]
+C --> UI : 200 JSON
+alt not found
+  UI --> U : "No matching parking lot found ..."
+else found
+  UI --> U : Show only matching parking lot.
+end
+@enduml

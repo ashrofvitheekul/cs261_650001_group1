@@ -1,0 +1,34 @@
+
+@startuml
+actor User as U
+participant "Web Page\n(nearest.js)" as UI
+participant "Browser\n(Geolocation)" as GPS
+participant ParkingLotController as C
+participant ParkingLotService as S
+participant ParkingLotRepository as R
+database "MS SQL" as DB
+
+U -> UI : Select car and click "Find Nearest Parking Lot"
+UI -> GPS : getCurrentPosition()
+
+alt User denies permission
+  GPS --> UI : error
+  UI --> U : "Unable to access your location ..."
+else Permission granted
+  GPS --> UI : lat, lng
+  UI -> C : GET /api/parking-lots/nearest?lat&lng&type=CAR
+  C -> S : findNearest(lat, lng, "CAR")
+  S -> R : findByVehicleTypeAndAvailableSpotsGreaterThan("CAR", 0)
+  R -> DB : SELECT ... WHERE vehicle_type='CAR' AND available_spots > 0
+  DB --> R : Available parking lots
+  S -> S : Calculate distanceMeters() for each lot and select the nearest
+
+  alt No available parking lots
+    S --> C : NotFoundException
+    C --> UI : 404 {"message":"All car parking lots are full"}
+  else Available lot found
+    C --> UI : 200 {lot, distanceMeters}
+    UI --> U : Lot name + distance + "Navigate" button (opens Google Maps)
+  end
+end
+@enduml
