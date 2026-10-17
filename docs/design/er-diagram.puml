@@ -1,0 +1,16 @@
+@startuml
+hide circle
+entity parking_lot {
+  * id : BIGINT <<PK, IDENTITY>>
+  --
+  * code : NVARCHAR(10) <<UNIQUE>>
+  * name_th : NVARCHAR(150)
+  building : NVARCHAR(150)
+  * vehicle_type : NVARCHAR(12)  -- CAR / MOTORCYCLE
+  * latitude : DECIMAL(9,6)
+  * longitude : DECIMAL(9,6)
+  * total_spots : INT  -- > 0
+  * available_spots : INT  -- 0..total_spots
+  * updated_at : DATETIME2
+}
+@enduml
