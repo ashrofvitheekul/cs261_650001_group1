@@ -1,4 +1,4 @@
-# cs261_650001_group1
+# cs261_650001_group6
 https://trello.com/w/group6_section650001
 1. ฐานข้อมูล (1 คน)
  ER diagram · test spec ส่วน DAO
